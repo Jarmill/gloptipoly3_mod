@@ -22,7 +22,7 @@ end
 newp = p;
 
 
-if ~isnumeric(p)
+if ~isnumeric(p) && ~isempty(p)
     v_old = indvar(old);
     v_new = indvar(new);
 
