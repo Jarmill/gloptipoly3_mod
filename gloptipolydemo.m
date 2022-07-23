@@ -17,9 +17,19 @@ echo on
 
 mpol x1 x2
 g0 = 4*x1^2+x1*x2-4*x2^2-2.1*x1^4+4*x2^4+x1^6/3
+
+
+figure(1)
+clf
+subplot(1,2,1)
+fsurf(@(x1,x2) 4.*x1.^2+x1.*x2-4*x2.^2-2.1.*x1.^4+4*x2.^4+x1.^6/3)
+subplot(1,2,2)
+fsurf(@(x1,x2) 4.*x1.^2+x1.*x2-4*x2.^2-2.1.*x1.^4+4*x2.^4+x1.^6/3, [-1,1,-1,1])
 pause % Strike any key to continue.
 
 % Then we define the optimization problem
+mset('yalmip',true);
+mset(sdpsettings('solver', 'mosek'));
 
 P = msdp(min(g0))
 pause % Strike any key to continue.

@@ -11,7 +11,7 @@ function [sc_eval, ineq, eq] = eval(sc, var, pt, tol)
 % J. Miller, 22 July 2020
 
 if nargin < 4
-    tol = 1e-6;
+    tol = 1e-7;
 end
 
 npt = size(pt, 2);
@@ -61,11 +61,15 @@ for j = 1:npt
         %dl = double(sc_subs(i).left);
         %dr = double(sc_subs(i).right);
         if strcmp(type, 'le')
-            sc_eval(i, j) = ((dl(i) - tol) <= dr(i));
+%             sc_diff = dl(i) - dr(i);
+            sc_eval(i, j) = (dl(i) <= dr(i)) || abs(dl(i) - dr(i)) <= tol;
+%             sc_eval(i, j) = ((dl(i) - tol) <= dr(i));
             ineq(i_ineq, j) = dr(i) - dl(i);
             i_ineq = i_ineq + 1;
         elseif strcmp(type, 'ge')
-            sc_eval(i, j) = (dl(i) >= (dr(i) - tol));
+%             sc_eval(i, j) = (dl(i) >= (dr(i) - tol));
+%             sc_diff = dl(i) - dr(i);
+            sc_eval(i, j) = (dl(i) >= dr(i)) || abs(dl(i) - dr(i)) <= tol;
             ineq(i_ineq, j) = dl(i) - dr(i);
             i_ineq = i_ineq + 1;
         else %equal

@@ -20,7 +20,9 @@ nvar = length(var);
 %find types of constraints
 
 p_eval= zeros(np, npt);
-
+if isnumeric(p) 
+    p_eval = repmat(p, 1, npt);
+else
 if isa(pt, 'sym')
     %interface with matlab's symbolic math toolbox
     p_eval = sym(p_eval);
@@ -68,3 +70,4 @@ for i = 1:np
     end
 end
 
+end
